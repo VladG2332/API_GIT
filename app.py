@@ -33,5 +33,11 @@ with app.app_context():
 def index():
     return jsonify({'message': 'Bienvenido a la API de Estudiantes'})
 
+# Ruta para listar todos los estudiantes
+@app.route('/estudiantes', methods=['GET'])
+def listar_estudiantes():
+    estudiantes = Estudiante.query.all()
+    return jsonify([estudiante.to_dict() for estudiante in estudiantes])
+
 if __name__ == '__main__':
     app.run(debug=True)
