@@ -45,5 +45,19 @@ def obtener_estudiante(no_control):
     estudiante = Estudiante.query.get_or_404(no_control)
     return jsonify(estudiante.to_dict())
 
+# Ruta para añadir un nuevo estudiante
+@app.route('/estudiantes', methods=['POST'])
+def nuevo_estudiante():
+    data = request.get_json()
+    estudiante = Estudiante(
+        no_control=data['no_control'],
+        nombre=data['nombre'],
+        ap_paterno=data['ap_paterno'],
+        ap_materno=data['ap_materno'],
+        semestre=data['semestre']
+    )
+    db.session.add(estudiante)
+    db.session.commit()
+    return jsonify(estudiante.to_dict()), 201
 if __name__ == '__main__':
     app.run(debug=True)
