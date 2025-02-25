@@ -72,5 +72,13 @@ def editar_estudiante(no_control):
     db.session.commit()
     return jsonify(estudiante.to_dict())
 
+# Ruta para eliminar un estudiante
+@app.route('/estudiantes/<string:no_control>', methods=['DELETE'])
+def eliminar_estudiante(no_control):
+    estudiante = Estudiante.query.get_or_404(no_control)
+    db.session.delete(estudiante)
+    db.session.commit()
+    return '', 204
+
 if __name__ == '__main__':
     app.run(debug=True)
