@@ -39,5 +39,11 @@ def listar_estudiantes():
     estudiantes = Estudiante.query.all()
     return jsonify([estudiante.to_dict() for estudiante in estudiantes])
 
+# Ruta para obtener un estudiante por su número de control
+@app.route('/estudiantes/<string:no_control>', methods=['GET'])
+def obtener_estudiante(no_control):
+    estudiante = Estudiante.query.get_or_404(no_control)
+    return jsonify(estudiante.to_dict())
+
 if __name__ == '__main__':
     app.run(debug=True)
