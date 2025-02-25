@@ -59,5 +59,18 @@ def nuevo_estudiante():
     db.session.add(estudiante)
     db.session.commit()
     return jsonify(estudiante.to_dict()), 201
+
+# Ruta para editar un estudiante existente
+@app.route('/estudiantes/<string:no_control>', methods=['PUT'])
+def editar_estudiante(no_control):
+    estudiante = Estudiante.query.get_or_404(no_control)
+    data = request.get_json()
+    estudiante.nombre = data.get('nombre', estudiante.nombre)
+    estudiante.ap_paterno = data.get('ap_paterno', estudiante.ap_paterno)
+    estudiante.ap_materno = data.get('ap_materno', estudiante.ap_materno)
+    estudiante.semestre = data.get('semestre', estudiante.semestre)
+    db.session.commit()
+    return jsonify(estudiante.to_dict())
+
 if __name__ == '__main__':
     app.run(debug=True)
